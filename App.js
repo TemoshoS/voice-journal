@@ -4,6 +4,7 @@ import VoiceNoteList from './components/VoiceNoteList';
 import VoiceRecorder from './components/VoiceRecorder';
 import { useState } from 'react';
 import { Audio } from 'expo-av';
+import { formatDuration } from './components/utils';
 
 
 export default function App() {
@@ -14,6 +15,10 @@ export default function App() {
       const soundObject =  new Audio.Sound();
       await soundObject.loadAsync({uri: note.uri});
       await soundObject.playAsync();
+
+      const duration = await soundObject.getStatusAsync();
+      const formattedDuration = formatDuration(duration.durationMillis / 1000);
+      alert(`Playing: ${formattedDuration}`);
       
     } catch (error) {
       console.error('Error playing audio', error)
@@ -45,7 +50,8 @@ export default function App() {
       <VoiceNoteList 
       notes={notes}
       onPlayNote={handlePlayNote}
-      onDeleteNote={handleDeleteNote}/>
+      onDeleteNote={handleDeleteNote}
+      formatDuration={formatDuration}/>
      </SafeAreaView>
     </View>
   );

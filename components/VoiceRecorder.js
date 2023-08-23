@@ -2,13 +2,9 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React,{useState, useEffect} from 'react'
 import {Audio} from 'expo-av'
 import { MaterialIcons } from '@expo/vector-icons';
+import { formatDuration } from './utils';
 
-function formatDuration(durationInSeconds) {
-    const hours = Math.floor(durationInSeconds / 3600);
-    const minutes = Math.floor((durationInSeconds % 3600) / 60);
-    const seconds = durationInSeconds % 60;
-    return `0${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-}
+
 
 export default function VoiceRecorder({onSaveNote}) {
     const [recording, setRecording] = useState();
